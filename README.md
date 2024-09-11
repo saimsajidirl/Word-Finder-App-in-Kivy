@@ -111,73 +111,34 @@ This application provides a comprehensive tool for advanced file searching, comb
 
 #Apk-made-using-Google-Collab
 
-To convert your Kivy app into an APK using Google Colab, you'll need to use buildozer. Here's a step-by-step guide to help you set it up:
+Step 1: Prepare your KivyMD app for conversion
+Before converting your app to APK, ensure it is properly configured. Make sure you have included all necessary files, assets, and dependencies. Test your app thoroughly on your development machine to ensure it is functioning as expected.
 
-1. Set Up Google Colab Environment
+Step 2: Set up your environment in Google Colab
 
+Open Google Colab in your web browser and create a new Python notebook.
+Import the necessary libraries, including Kivy and KivyMD, by running the appropriate installation commands.
+Upload your KivyMD app's main Python file and any additional files or assets required by your app to Google Colab. You can use the Colab upload feature to accomplish this.
+******************************************
+Google Colab:
+https://colab.research.google.com
 
-# Install dependencies
-!apt update
-!apt install -y python3 python3-pip python3-setuptools
-!apt install -y git zip unzip
-!apt install -y cython
-!apt install -y autoconf automake libtool pkg-config
-!apt install -y libffi-dev libssl-dev
-!apt install -y libltdl-dev liblzma-dev libgmp-dev
-!apt install -y zlib1g-dev
-!apt install -y libsqlite3-dev
+Commands:
+➡️!sudo apt update
+!sudo apt install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+!pip3 install --user --upgrade Cython==0.29.33 virtualenv
 
-# Install Buildozer and Kivy dependencies
-!pip install buildozer cython==0.29.19
+➡️!git clone https://github.com/kivy/buildozer
+%cd buildozer
+!python setup.py build
+!pip install -e .
+%cd ..
 
-2. Upload Your Kivy App Files
+Now before running the next command upload your Python file
 
-You can either upload your files manually in Colab or use gdown if your files are hosted on Google Drive.
+➡️ !buildozer init
 
-To manually upload files:
+Next, scroll down to the requirements and change them as follows:
+requirements = python3, kivy==2.3.0, docutils, Kivy-Garden, pygments, pypiwin32
 
-from google.colab import files
-uploaded = files.upload()
-
-3. Create Buildozer Spec File
-
-If you don't already have a buildozer.spec file for your Kivy app, you can generate one using the following command:
-
-
-
-!buildozer init
-
-This command will create a buildozer.spec file in the directory.
-
-Edit the buildozer.spec file to configure your app settings like app name, version, and requirements.
-
-
-!nano buildozer.spec
-
-4. Build the APK
-
-Once your environment is set up and your buildozer.spec file is configured, you can build the APK using:
-
-
-
-!buildozer -v android debug
-
-This command will download all the necessary components and start building your APK. It may take some time to complete.
-5. Download the APK
-
-Once the APK is built, you can download it from the Colab session. Run the following command to zip the APK file:
-
-
-
-!zip -r kivy_app.zip ./bin
-
-Download the APK file using:
-
-
-
-from google.colab import files
-files.download('kivy_app.zip')
-
-This will allow you to download the APK and test it on your Android device.
-
-Let me know if you need help with any specific part of the process!
+➡️!buildozer -v android debug
