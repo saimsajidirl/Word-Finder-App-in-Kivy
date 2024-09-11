@@ -110,4 +110,74 @@ This application provides a comprehensive tool for advanced file searching, comb
 
 
 #Apk-made-using-Google-Collab
-https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbW1oSHluR1licE9YZFJybjE3T3VRTzNsTDBGUXxBQ3Jtc0tsUm5YbXpRci10V0ZfcWNoMllBaEJYemlxZEs2aGhWUTNVVzRZclJBWUNUV2J1Y0NxbWNXOWVKNnhtdEk4MzlsbHZkSEl2aEttdG8yNmlqMmRQYjZmTWN3ZTc5OWRYMV9xcFJXYWtRcjB3dGxjUnFOcw&q=https%3A%2F%2Fcolab.research.google.com%2Fdrive%2F1b9gMzs6XAtxCtahxei4N0fWZk7xiPlVw%3Fusp%3Dsharing&v=XqWLaMtDCyk
+
+To convert your Kivy app into an APK using Google Colab, you'll need to use buildozer. Here's a step-by-step guide to help you set it up:
+
+1. Set Up Google Colab Environment
+
+
+# Install dependencies
+!apt update
+!apt install -y python3 python3-pip python3-setuptools
+!apt install -y git zip unzip
+!apt install -y cython
+!apt install -y autoconf automake libtool pkg-config
+!apt install -y libffi-dev libssl-dev
+!apt install -y libltdl-dev liblzma-dev libgmp-dev
+!apt install -y zlib1g-dev
+!apt install -y libsqlite3-dev
+
+# Install Buildozer and Kivy dependencies
+!pip install buildozer cython==0.29.19
+
+2. Upload Your Kivy App Files
+
+You can either upload your files manually in Colab or use gdown if your files are hosted on Google Drive.
+
+To manually upload files:
+
+from google.colab import files
+uploaded = files.upload()
+
+3. Create Buildozer Spec File
+
+If you don't already have a buildozer.spec file for your Kivy app, you can generate one using the following command:
+
+
+
+!buildozer init
+
+This command will create a buildozer.spec file in the directory.
+
+Edit the buildozer.spec file to configure your app settings like app name, version, and requirements.
+
+
+!nano buildozer.spec
+
+4. Build the APK
+
+Once your environment is set up and your buildozer.spec file is configured, you can build the APK using:
+
+
+
+!buildozer -v android debug
+
+This command will download all the necessary components and start building your APK. It may take some time to complete.
+5. Download the APK
+
+Once the APK is built, you can download it from the Colab session. Run the following command to zip the APK file:
+
+
+
+!zip -r kivy_app.zip ./bin
+
+Download the APK file using:
+
+
+
+from google.colab import files
+files.download('kivy_app.zip')
+
+This will allow you to download the APK and test it on your Android device.
+
+Let me know if you need help with any specific part of the process!
